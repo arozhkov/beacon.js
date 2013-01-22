@@ -1,4 +1,8 @@
 beacon.js
 =========
 
-Boomerang beacon server
+
+    
+    boomerang --> beacon.js (geoip)  |--> statsd --> graphite
+                                     |--> mongodb
+                  
