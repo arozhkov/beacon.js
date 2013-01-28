@@ -4,5 +4,8 @@ beacon.js
 
     
     boomerang  -->  beacon.js  (geoip)  |-->  statsd  -->  graphite
-                               (raw)    |-->  mongodb
+                               (raw)    |-->  any durable storage (file, sql, nosql)
+                               
+                               
+...
                   
