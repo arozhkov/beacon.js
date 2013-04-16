@@ -1,30 +1,40 @@
-/* beacon.js
-*/
-var http = require('http');
-var url = require('url');
+// beacon.js
+
+var http = require('http'),
+    url = require('url'),
+    config = require('./config').config;
 
 
 function processRaw(obj) {
   process.nextTick(function() {
-    console.log('Raw: ' + obj);
+    console.log('raw');
   });
 };
 
 
 function processStat(obj) {
   process.nextTick(function() {
-    console.log('Stat: ' + obj );
+    console.log('stat');
   });
 };
 
-function beacon (url) {
+
+function beacon (req) {
 
   process.nextTick(function(){
 
-    console.log('Beacon: ' + url);
+    console.log('>>>');
+    console.log('> header_host: ' + req.headers[config.header_host]);
+    console.log('> header_clientip: ' + req.headers[config.header_clientip]);
+    
+    var query = url.parse(req.url, true).query;
+    for (var p in query) {
+      console.log('> ' + p + ': ' + query[p]);
+    }
+    console.log('>>>');
 
-    new processRaw(url);
-    new processStat(url);
+    new processRaw(req);
+    new processStat(req);
 
   });
 };
@@ -33,7 +43,7 @@ function beacon (url) {
 
 http.createServer(function (req, res) {
 
-  new beacon(req.url);
+  new beacon(req);
 
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('');
